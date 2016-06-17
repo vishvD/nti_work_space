@@ -34,42 +34,42 @@ cli_parser(){
 	while getopts ":v:p:q:i:t:r:" opt; do
 		case $opt in 
 		v)   #vm name
-			if [[ $OPTARG = -* ]]; then
+			if [ $OPTARG = -* ]; then
 				((OPTIND--))
 				continue
 			fi
 		vm_name=$OPTARG
 		;; 
 		p) #vdi image path
-			if [[ $OPTARG = -* ]]; then
+			if [ $OPTARG = -* ]; then
 				((OPTIND--))
 				continue
 			fi
 		vm_img_path=$OPTARG
 		;;
 		q) #qcow2 image path
-			if [[ $OPTARG = -* ]]; then
+			if [ $OPTARG = -* ]; then
 				((OPTIND--))
 				continue
 			fi
 		qcow2_path=$OPTARG
 		;;
 		i) #ip address
-			if [[ $OPTARG = -* ]]; then
+			if [ $OPTARG = -* ]; then
 				((OPTIND--))
 				continue
 			fi
 		vm_ip=$OPTARG
 		;;
 		t) #private ip address
-			if [[ $OPTARG = -* ]]; then
+			if [ $OPTARG = -* ]; then
 				((OPTIND--))
 				continue
 			fi
 		vm_priv_ip=$OPTARG
 		;;
 		r) #memory
-			if [[ $OPTARG = -* ]]; then
+			if [ $OPTARG = -* ]; then
 				((OPTIND--))
 				continue
 			fi
