@@ -155,7 +155,7 @@ EOF
 main() {
         #call cli_parser to parse cli args
         echo "-----------------------------------------------------------------------------"
-        echo "                       cpi installer                                        "
+        echo "            nTI cONTINUOUS iNTEGRATION sERVER @deploymachine                                    "
         echo "-----------------------------------------------------------------------------"
         cli_parser $*
         qemu_img_convert_qcow2_vdi
