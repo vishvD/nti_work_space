@@ -189,7 +189,7 @@ main() {
 	fi
 cmt
         #@create a bridge n/w on eth0
-	VBoxManage modifyvm $vm_name --bridgeadapter1 eno1 
+	VBoxManage modifyvm $vm_name --bridgeadapter1 eth0 
 	if [ $? -ne 0 ]; then
 		failure_msg "[$LINENO] failed on creating bridge adapter on eth0"
 	fi
@@ -199,7 +199,7 @@ cmt
 	fi
 
         #@create a host only n/w on nic3 
-	VBoxManage modifyvm $vm_name --hostonlyadapter2 vboxnet1
+	VBoxManage modifyvm $vm_name --hostonlyadapter3 vboxnet1
 	if [ $? -ne 0 ]; then
 		failure_msg "[$LINENO] failed on creating host-only adapter on NIC3"
 	fi
@@ -209,7 +209,7 @@ cmt
 	fi
 
         #@create a nat nw on nic2
-        VBoxManage modifyvm $vm_name --nic2 nat --nictype3 82540EM --cableconnected1 on
+        VBoxManage modifyvm $vm_name --nic2 nat --nictype2 82540EM --cableconnected1 on
 	if [ $? -ne 0 ]; then
 		failure_msg "[$LINENO] failed on creating nat adapter on NIC2"
 	fi
