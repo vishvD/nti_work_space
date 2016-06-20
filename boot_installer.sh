@@ -255,5 +255,6 @@ main $*
 
 	ip_manager 
         echo -e "\e[32m fINISHED dEPLOY iNSTALLATION IP:\e[34m$vm_ip\e[0m"
+        sleep 60
 	#sshpass -p "deploy" ssh -p 2222 -t deploy@localhost -t "sudo ip addr flush dev enp0s3"
 
