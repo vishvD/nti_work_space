@@ -5,7 +5,7 @@ vm_img_path=""
 qcow2_path=""
 vm_ip=""
 vm_ram=0
-img_name=cpi_installer.vdi
+img_name=cpi_inst.vdi
 vm_priv_ip=""
 
 qemu_img_convert_qcow2_vdi(){
@@ -20,12 +20,11 @@ qemu_img_convert_qcow2_vdi(){
 		failure_msg "[$LINENO] qcow2 img can't be found at $qcow2_path"
         fi
         if [ ! -f $vm_img_path/$img_name ]; then 
-        echo " creating vdi image from qcow2........ "
-        chmod 777 $vm_img_path/$img_name 
+        echo -e "\e[33mcreating vdi image from qcow2........ \e[0m"
+	sudo chown jenkins: $vm_img_path
 	qemu-img convert -f qcow2 $qcow2_path -O vdi $vm_img_path/$img_name
         if [ $? -ne 0 ]; then failure_msg "failed to convert qcow2-->vdi"; else echo "vdi image $vm_img_path/$img_name created"; fi
         fi
-        chmod 777 $vm_img_path/$img_name
 }
    
 
@@ -87,7 +86,8 @@ done
 
 #dispaly failure message on console
 failure_msg() {
-	echo " $* : exiting....."
+	echo -e "\e[31m$* : exiting....."
+        echo -e "\e[0m"
 		exit
 }
 
@@ -96,7 +96,7 @@ input_managr(){
         if [ -z $vm_img_path ]; then
 		failure_msg "vm image path missing"
         else
-          echo "vm image path : $vm_img_path"
+          echo -e "vm image path : \e[33m$vm_img_path\e[0m"
         fi
 	if [ ! -f $vm_img_path/$img_name ] ; then 
 		failure_msg "[$LINENO] vdi img can't be found at $vm_img_path/$img_name"
@@ -104,22 +104,22 @@ input_managr(){
         if [ -z $vm_name ]; then
 		failure_msg "[$LINENO] vm name missing"
         else
-          echo "vm name : $vm_name"
+          echo -e "vm name : \e[33m$vm_name\e[0m"
         fi
         if [ -z $vm_ip ]; then
                  failure_msg "[$LINENO] vm_ip missing"
         else 
-          echo "vm ip address : $vm_ip"
+          echo -e  "vm ip address : \e[33m$vm_ip\e[0m"
         fi
         if [ -z $vm_priv_ip ]; then
                  failure_msg "[$LINENO] vm_priv_ip missing"
         else 
-          echo "vm private ip address : $vm_priv_ip"
+          echo -e "vm private ip address : \e[33m$vm_priv_ip\e[0m"
         fi
         if [ $vm_ram -eq 0 ] ; then
                 failure_msg "[$LINENO] vm_ram missing"
         else 
-          echo "vm memory : $vm_ram"
+          echo -e "vm memory : \e[33m$vm_ram\e[0m"
         fi
 }
 
@@ -156,9 +156,9 @@ EOF
 #main function ...everything will be start from here only
 main() {
         #call cli_parser to parse cli args
-        echo "-----------------------------------------------------------------------------"
-        echo "            nTI cONTINUOUS iNTEGRATION sERVER @deploymachine                                    "
-        echo "-----------------------------------------------------------------------------"
+        echo -e "\e[32m-----------------------------------------------------------------------------"
+        echo -e "\e[36m            nTI cONTINUOUS iNTEGRATION sERVER @deploymachine                 "
+        echo -e "\e[32m-----------------------------------------------------------------------------\e[0m"
         cli_parser $*
         qemu_img_convert_qcow2_vdi
         input_managr
@@ -245,13 +245,15 @@ cmt
 } 
 main $* 
         i=1
-        echo "booting  $vm_name ....."
+        echo -e "\e[33mbooting  $vm_name ....."
         while [ $i -ne 0 ] ; do
         sshpass -p "deploy" ssh -p 2222 -t deploy@localhost -t "exit" 
         i=$?
         sleep 1
         done
+        echo -e "\e[0m"
 
 	ip_manager 
+        echo -e "\e[32m fINISHED dEPLOY iNSTALLATION IP:\e[34m$vm_ip\e[0m"
 	#sshpass -p "deploy" ssh -p 2222 -t deploy@localhost -t "sudo ip addr flush dev enp0s3"
 
