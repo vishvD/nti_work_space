@@ -21,9 +21,11 @@ qemu_img_convert_qcow2_vdi(){
         fi
         if [ ! -f $vm_img_path/$img_name ]; then 
         echo " creating vdi image from qcow2........ "
+        chmod 777 $vm_img_path/$img_name 
 	qemu-img convert -f qcow2 $qcow2_path -O vdi $vm_img_path/$img_name
         if [ $? -ne 0 ]; then failure_msg "failed to convert qcow2-->vdi"; else echo "vdi image $vm_img_path/$img_name created"; fi
         fi
+        chmod 777 $vm_img_path/$img_name
 }
    
 
