@@ -5,7 +5,7 @@ vm_img_path=""
 qcow2_path=""
 vm_ip=""
 vm_ram=0
-img_name=cpi_inst.vdi
+img_name=cpi_install.vdi
 vm_priv_ip=""
 
 qemu_img_convert_qcow2_vdi(){
@@ -164,7 +164,7 @@ main() {
         input_managr
 
         #create vm
-	VBoxManage createvm --name $vm_name --ostype "RedHat_64" --register
+	sudo VBoxManage createvm --name $vm_name --ostype "RedHat_64" --register
         if [ $? -ne 0 ]; then 
 		failure_msg "[$LINENO] create vm failure"
         fi 
@@ -220,7 +220,8 @@ cmt
 		failure_msg "[$LINENO] failed on creating nat adapter on NIC2"
 	fi
  	#VBoxManage startvm $vm_name
- 	VBoxManage startvm $vm_name --type headless
+ 	#sudo VBoxManage startvm $vm_name --type headless 
+	sudo VBoxManage startvm $vm_name --type separate
 	if [ $? -ne 0 ]; then
 		failure_msg "[$LINENO] failed to start vm" 
 	fi 
