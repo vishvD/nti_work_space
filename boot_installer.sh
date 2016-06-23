@@ -5,7 +5,7 @@ vm_img_path=""
 qcow2_path=""
 vm_ip=""
 vm_ram=0
-img_name=cpi_install.vdi
+img_name=deploy.vdi
 vm_priv_ip=""
 
 qemu_img_convert_qcow2_vdi(){
